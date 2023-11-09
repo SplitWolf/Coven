@@ -1,5 +1,4 @@
-use coven_engine::coven::*;
-
+use coven::Application;
 struct SandboxApp {
     
 }
@@ -16,4 +15,4 @@ impl Application for SandboxApp {
     }
 }
 
-coven_engine::startApp!(SandboxApp);
+coven::startApp!(SandboxApp);

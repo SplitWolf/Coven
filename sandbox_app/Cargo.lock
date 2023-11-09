@@ -3,12 +3,12 @@
 version = 3
 
 [[package]]
-name = "coven-engine"
+name = "coven"
 version = "0.1.0"
 
 [[package]]
 name = "sandbox_app"
 version = "0.1.0"
 dependencies = [
- "coven-engine",
+ "coven",
 ]
