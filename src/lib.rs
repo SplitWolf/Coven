@@ -1,4 +1,6 @@
-pub mod coven;
+mod core;
+pub use crate::core::Application;
 // -------------------- Entry Point --------------------
-pub mod entry_point;
+#[macro_use]
+mod entry_point;
 // -----------------------------------------------------
