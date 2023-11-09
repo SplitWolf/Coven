@@ -1,6 +1,19 @@
+use coven_engine::coven::*;
 
-
-
-fn main() {
-    println!("Hello, world! {}",coven_engine::add(1, 2));
+struct SandboxApp {
+    
 }
+
+impl SandboxApp {
+    fn new() -> Self {
+        SandboxApp { }
+    }
+}
+
+impl Application for SandboxApp {
+    fn create_app() -> Self where Self: Sized {
+        SandboxApp::new()
+    }
+}
+
+coven_engine::startApp!(SandboxApp);
