@@ -4,3 +4,6 @@ pub use crate::core::Application;
 #[macro_use]
 mod entry_point;
 // -----------------------------------------------------
+#[macro_use]
+pub mod log;
+pub use crate::log::*;
