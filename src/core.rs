@@ -1,9 +1,10 @@
+use crate::COVEN_CORE_INFO;
+
 pub trait Application {
     fn run(&self) {
-        println!("Engine Started");
+        COVEN_CORE_INFO!("Engine Started");
         loop {
-            //print!("{}",add(1,2));
-            std::thread::sleep(std::time::Duration::from_secs(20));
+            std::thread::sleep(std::time::Duration::from_millis(300));
             std::process::exit(0);
         }
     }
