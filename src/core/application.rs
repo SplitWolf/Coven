@@ -1,5 +1,8 @@
 use crate::COVEN_CORE_INFO;
 
+pub fn init() {
+    crate::log::init();
+}
 pub trait Application {
     fn run(&self) {
         COVEN_CORE_INFO!("Engine Started");
