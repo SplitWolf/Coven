@@ -1,5 +1,5 @@
-use std::fmt::write;
-
+#![allow(dead_code)]
+mod key_event;
 pub enum EventType {
     WindowClose, WindowResize, WindowFocus, WindowLostFocus, WindowMoved,
     AppTick, AppUpdate, AppRender,
@@ -22,24 +22,44 @@ pub enum EventCategory {
 }
 
 pub trait Event {
-    fn GetEventType(&self) -> Option<EventType> {
-        None
-    }
-    fn GetCategoryFlags(&self) -> i32 {
-        0
-    } 
     #[inline]
-    fn IsInCategory(&self, category: EventCategory) -> bool {
-        self.GetCategoryFlags() & category as i32 != 0
+    fn is_in_category(&self, category: EventCategory) -> bool {
+        self.get_category_flags() & category as i32 != 0
     } 
-    fn GetName(&self) -> Option<&str> {
-        None
-    }
-    fn IsHandled(&self) -> bool;
+    fn get_event_type(&self) -> EventType;
+    fn get_category_flags(&self) -> i32;
+    fn get_name(&self) -> &str;
+    fn is_handled(&self) -> bool;
+    fn set_handled(&mut self, state: bool);
 }
 
 impl std::fmt::Display for dyn Event {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}", self.GetName().unwrap_or("No type specified"))
+        write!(f, "{}", self.get_name())
+    }
+}
+
+struct KeyPressedEvent {
+    handled: bool
+}
+
+impl Event for KeyPressedEvent {
+    fn get_event_type(&self) -> EventType {
+        todo!()
+    }
+
+    fn get_category_flags(&self) -> i32 {
+        todo!()
+    }
+
+    fn get_name(&self) -> &str {
+        todo!()
+    }
+
+    fn is_handled(&self) -> bool {
+        self.handled
+    }
+    fn set_handled(&mut self, state: bool) {
+        self.handled = state;
     }
 }
