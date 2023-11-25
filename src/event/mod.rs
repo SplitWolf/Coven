@@ -38,28 +38,3 @@ impl std::fmt::Display for dyn Event {
         write!(f, "{}", self.get_name())
     }
 }
-
-struct KeyPressedEvent {
-    handled: bool
-}
-
-impl Event for KeyPressedEvent {
-    fn get_event_type(&self) -> EventType {
-        todo!()
-    }
-
-    fn get_category_flags(&self) -> i32 {
-        todo!()
-    }
-
-    fn get_name(&self) -> &str {
-        todo!()
-    }
-
-    fn is_handled(&self) -> bool {
-        self.handled
-    }
-    fn set_handled(&mut self, state: bool) {
-        self.handled = state;
-    }
-}
