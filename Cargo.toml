@@ -9,6 +9,7 @@ edition = "2021"
 log = "0.4.20"
 log4rs = "1.2.0"
 async-log = "2.0.0"
+tracing = "0.1.40"
 
 [lib]
-crate-type = ["dylib"]
+crate-type = ["lib"]
