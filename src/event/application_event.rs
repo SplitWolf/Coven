@@ -1,6 +1,6 @@
 //TODO: Add custom std::fmt::Display for each event
 use super::Event;
-use crate::EVENT_CLASS_TYPE;
+use crate::EVENT_STRUCT_TYPE;
 
 // --------------- Window Events -------------------
 
@@ -18,7 +18,7 @@ impl WindowResizeEvent {
 }
 
 impl Event for WindowResizeEvent {
-    EVENT_CLASS_TYPE!(WindowResize);
+    EVENT_STRUCT_TYPE!(WindowResize);
     fn get_category_flags(&self) -> i32 {
         super::EventCategory::EventCategoryApplication as i32
     }
@@ -37,7 +37,7 @@ impl WindowMovedEvent {
 }
 
 impl Event for WindowMovedEvent {
-    EVENT_CLASS_TYPE!(WindowMoved);
+    EVENT_STRUCT_TYPE!(WindowMoved);
     fn get_category_flags(&self) -> i32 {
         super::EventCategory::EventCategoryApplication as i32
     }
@@ -55,7 +55,7 @@ impl WindowCloseEvent {
 }
 
 impl Event for WindowCloseEvent {
-    EVENT_CLASS_TYPE!(WindowClose);
+    EVENT_STRUCT_TYPE!(WindowClose);
     fn get_category_flags(&self) -> i32 {
         super::EventCategory::EventCategoryApplication as i32
     }
@@ -72,7 +72,7 @@ impl WindowFocusEvent {
 }
 
 impl Event for WindowFocusEvent {
-    EVENT_CLASS_TYPE!(WindowFocus);
+    EVENT_STRUCT_TYPE!(WindowFocus);
     fn get_category_flags(&self) -> i32 {
         super::EventCategory::EventCategoryApplication as i32
     }
@@ -88,7 +88,7 @@ impl WindowLostFocusEvent {
 }
 
 impl Event for WindowLostFocusEvent {
-    EVENT_CLASS_TYPE!(WindowLostFocus);
+    EVENT_STRUCT_TYPE!(WindowLostFocus);
     fn get_category_flags(&self) -> i32 {
         super::EventCategory::EventCategoryApplication as i32
     }

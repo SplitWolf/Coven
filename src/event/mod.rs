@@ -12,6 +12,24 @@ macro_rules! BIT {
         1 << $x
     };
 }
+#[macro_export]
+macro_rules! EVENT_STRUCT_TYPE {
+    ($x:tt) => {
+        fn get_event_type(&self) -> super::EventType {
+            super::EventType::$x
+        }
+        fn get_name(&self) -> &str {
+            stringify!($x)
+        }
+        fn is_handled(&self) -> bool {
+            self.handled
+        }
+    
+        fn set_handled(&mut self, state: bool) {
+            self.handled = state;
+        }
+    };
+}
 
 pub enum EventCategory {
     EventCategoryApplication = BIT!(0),
