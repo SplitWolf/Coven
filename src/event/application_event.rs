@@ -94,3 +94,57 @@ impl Event for WindowLostFocusEvent {
     }
 }
 
+// -------------------- App Events --------------------
+
+pub struct AppTickEvent {
+    handled: bool
+}
+
+impl AppTickEvent {
+    pub fn new() -> AppTickEvent {
+        AppTickEvent { handled: false}
+    }
+}
+
+impl Event for AppTickEvent {
+    EVENT_STRUCT_TYPE!(AppTick);
+    fn get_category_flags(&self) -> i32 {
+        super::EventCategory::EventCategoryApplication as i32
+    }
+}
+
+pub struct AppUpdateEvent {
+    handled: bool
+}
+
+impl AppUpdateEvent {
+    pub fn new() -> AppUpdateEvent {
+        AppUpdateEvent { handled: false}
+    }
+}
+
+impl Event for AppUpdateEvent {
+    EVENT_STRUCT_TYPE!(AppUpdate);
+    fn get_category_flags(&self) -> i32 {
+        super::EventCategory::EventCategoryApplication as i32
+    }
+}
+
+pub struct AppRenderEvent {
+    handled: bool
+}
+
+impl AppRenderEvent {
+    pub fn new() -> AppRenderEvent {
+        AppRenderEvent { handled: false}
+    }
+}
+
+impl Event for AppRenderEvent {
+    EVENT_STRUCT_TYPE!(AppRender);
+    fn get_category_flags(&self) -> i32 {
+        super::EventCategory::EventCategoryApplication as i32
+    }
+}
+
+
