@@ -1,4 +1,6 @@
 #![allow(dead_code)]
+
+use std::any::Any;
 pub mod key_event;
 pub mod mouse_event;
 pub mod application_event;
@@ -21,6 +23,9 @@ macro_rules! EVENT_STRUCT_TYPE {
     ($x:tt) => {
         fn get_static_type() -> super::EventType {
             super::EventType::$x
+        }
+        fn as_any(&self) -> &dyn std::any::Any {
+            self
         }
         fn get_event_type(&self) -> super::EventType {
             super::EventType::$x
@@ -47,11 +52,12 @@ pub enum EventCategory {
 }
 
 pub trait Event {
+    fn get_static_type() -> EventType where Self: Sized;
     #[inline]
     fn is_in_category(&self, category: EventCategory) -> bool {
         self.get_category_flags() & category as i32 != 0
     } 
-    fn get_static_type() -> EventType where Self: Sized;
+    fn as_any(&self) -> &dyn Any;
     fn get_event_type(&self) -> EventType;
     fn get_category_flags(&self) -> i32;
     fn get_name(&self) -> &str;
@@ -75,10 +81,10 @@ impl EventDispatcher<'_> {
         EventDispatcher { event }
     }
     
-    
-    pub fn dispatch<Q: Event>(&mut self, func: impl Fn(&dyn Event) -> bool) -> bool {
+
+    pub fn dispatch<Q: Event + 'static>(&mut self, func: impl Fn(&Q) -> bool) -> bool {
         if self.event.get_event_type() == Q::get_static_type() {
-            self.event.set_handled(func(self.event));
+            self.event.set_handled(func(self.event.as_any().downcast_ref().expect("Already Checked")));
             return true;
         }
         false
