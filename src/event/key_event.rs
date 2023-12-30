@@ -1,35 +1,47 @@
+//TODO: Add custom std::fmt::Display for each event
 use super::Event;
+use crate::EVENT_STRUCT_TYPE;
 
-struct KeyPressedEvent {
+pub struct KeyPressedEvent {
     key_code: i32,
     repeat_count: u32,
-    handeld: bool
+    handled: bool
 }
 
 impl KeyPressedEvent {
-    fn new(key_code: i32, repeat_count: u32) -> KeyPressedEvent {
-        KeyPressedEvent { key_code, repeat_count, handeld: false }
+    pub fn new(key_code: i32, repeat_count: u32) -> KeyPressedEvent {
+        KeyPressedEvent { key_code, repeat_count, handled: false }
+    }
+    pub fn get_key_code(&self) -> i32 {
+        self.key_code
     }
 }
 
 impl Event for KeyPressedEvent {
-    fn get_event_type(&self) -> super::EventType {
-        super::EventType::KeyPressed
-    }
-
+    EVENT_STRUCT_TYPE!(KeyPressed);
     fn get_category_flags(&self) -> i32 {
         super::EventCategory::EventCategoryInput as i32 | super::EventCategory::EventCategoryKeyboard as i32
     }
 
-    fn get_name(&self) -> &str {
-        "KeyPressed"
-    }
+}
 
-    fn is_handled(&self) -> bool {
-        self.handeld
-    }
+pub struct KeyReleasedEvent {
+    key_code: i32,
+    handled: bool
+}
 
-    fn set_handled(&mut self, state: bool) {
-        self.handeld = state;
+impl KeyReleasedEvent {
+    pub fn new(key_code: i32) -> KeyReleasedEvent {
+        KeyReleasedEvent { key_code, handled: false }
+    }
+    pub fn get_key_code(&self) -> i32 {
+        self.key_code
+    }
+}
+
+impl Event for KeyReleasedEvent {
+    EVENT_STRUCT_TYPE!(KeyReleased);
+    fn get_category_flags(&self) -> i32 {
+        super::EventCategory::EventCategoryInput as i32 | super::EventCategory::EventCategoryKeyboard as i32
     }
 }

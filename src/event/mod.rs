@@ -1,5 +1,7 @@
 #![allow(dead_code)]
-mod key_event;
+pub mod key_event;
+pub mod mouse_event;
+pub mod application_event;
 pub enum EventType {
     WindowClose, WindowResize, WindowFocus, WindowLostFocus, WindowMoved,
     AppTick, AppUpdate, AppRender,
