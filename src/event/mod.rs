@@ -18,7 +18,7 @@ macro_rules! BIT {
         1 << $x
     };
 }
-#[macro_export]
+
 macro_rules! EVENT_STRUCT_TYPE {
     ($x:tt) => {
         fn get_static_type() -> super::EventType {
@@ -42,6 +42,7 @@ macro_rules! EVENT_STRUCT_TYPE {
         }
     };
 }
+pub(crate) use EVENT_STRUCT_TYPE;
 
 pub enum EventCategory {
     EventCategoryApplication = BIT!(0),
@@ -74,6 +75,7 @@ impl std::fmt::Display for dyn Event {
 pub struct EventDispatcher<'eventlife> {
     event: &'eventlife mut dyn Event
 }
+type EventFn<E> = fn(&E) -> bool;
 
 impl EventDispatcher<'_> {
     
@@ -82,8 +84,8 @@ impl EventDispatcher<'_> {
     }
     
 
-    pub fn dispatch<Q: Event + 'static>(&mut self, func: impl Fn(&Q) -> bool) -> bool {
-        if self.event.get_event_type() == Q::get_static_type() {
+    pub fn dispatch<T: Event + 'static>(&mut self, func: EventFn<T>) -> bool {
+        if self.event.get_event_type() == T::get_static_type() {
             self.event.set_handled(func(self.event.as_any().downcast_ref().expect("Already Checked")));
             return true;
         }

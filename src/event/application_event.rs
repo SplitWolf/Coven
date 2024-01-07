@@ -1,6 +1,5 @@
 //TODO: Add custom std::fmt::Display for each event
 use super::Event;
-use crate::EVENT_STRUCT_TYPE;
 
 // --------------- Window Events -------------------
 
@@ -18,7 +17,7 @@ impl WindowResizeEvent {
 }
 
 impl Event for WindowResizeEvent {
-    EVENT_STRUCT_TYPE!(WindowResize);
+    super::EVENT_STRUCT_TYPE!(WindowResize);
     fn get_category_flags(&self) -> i32 {
         super::EventCategory::EventCategoryApplication as i32
     }
@@ -37,7 +36,7 @@ impl WindowMovedEvent {
 }
 
 impl Event for WindowMovedEvent {
-    EVENT_STRUCT_TYPE!(WindowMoved);
+    super::EVENT_STRUCT_TYPE!(WindowMoved);
     fn get_category_flags(&self) -> i32 {
         super::EventCategory::EventCategoryApplication as i32
     }
@@ -55,7 +54,7 @@ impl WindowCloseEvent {
 }
 
 impl Event for WindowCloseEvent {
-    EVENT_STRUCT_TYPE!(WindowClose);
+    super::EVENT_STRUCT_TYPE!(WindowClose);
     fn get_category_flags(&self) -> i32 {
         super::EventCategory::EventCategoryApplication as i32
     }
@@ -72,7 +71,7 @@ impl WindowFocusEvent {
 }
 
 impl Event for WindowFocusEvent {
-    EVENT_STRUCT_TYPE!(WindowFocus);
+    super::EVENT_STRUCT_TYPE!(WindowFocus);
     fn get_category_flags(&self) -> i32 {
         super::EventCategory::EventCategoryApplication as i32
     }
@@ -88,7 +87,7 @@ impl WindowLostFocusEvent {
 }
 
 impl Event for WindowLostFocusEvent {
-    EVENT_STRUCT_TYPE!(WindowLostFocus);
+    super::EVENT_STRUCT_TYPE!(WindowLostFocus);
     fn get_category_flags(&self) -> i32 {
         super::EventCategory::EventCategoryApplication as i32
     }
@@ -107,7 +106,7 @@ impl AppTickEvent {
 }
 
 impl Event for AppTickEvent {
-    EVENT_STRUCT_TYPE!(AppTick);
+    super::EVENT_STRUCT_TYPE!(AppTick);
     fn get_category_flags(&self) -> i32 {
         super::EventCategory::EventCategoryApplication as i32
     }
@@ -124,7 +123,7 @@ impl AppUpdateEvent {
 }
 
 impl Event for AppUpdateEvent {
-    EVENT_STRUCT_TYPE!(AppUpdate);
+    super::EVENT_STRUCT_TYPE!(AppUpdate);
     fn get_category_flags(&self) -> i32 {
         super::EventCategory::EventCategoryApplication as i32
     }
@@ -141,7 +140,7 @@ impl AppRenderEvent {
 }
 
 impl Event for AppRenderEvent {
-    EVENT_STRUCT_TYPE!(AppRender);
+    super::EVENT_STRUCT_TYPE!(AppRender);
     fn get_category_flags(&self) -> i32 {
         super::EventCategory::EventCategoryApplication as i32
     }

@@ -1,6 +1,5 @@
 //TODO: Add custom std::fmt::Display for each event
 use super::Event;
-use crate::EVENT_STRUCT_TYPE;
 
 // Non-button events
 pub struct MouseMovedEvent {
@@ -22,7 +21,7 @@ impl MouseMovedEvent {
 }
 
 impl Event for MouseMovedEvent {
-    EVENT_STRUCT_TYPE!(MouseMoved);
+    super::EVENT_STRUCT_TYPE!(MouseMoved);
     fn get_category_flags(&self) -> i32 {
         super::EventCategory::EventCategoryMouse as i32 | super::EventCategory::EventCategoryInput as i32
     }
@@ -53,7 +52,7 @@ impl MouseScrolledEvent {
 }
 
 impl Event for MouseScrolledEvent {
-    EVENT_STRUCT_TYPE!(MouseScrolled);
+    super::EVENT_STRUCT_TYPE!(MouseScrolled);
     fn get_category_flags(&self) -> i32 {
         super::EventCategory::EventCategoryMouse as i32 | super::EventCategory::EventCategoryInput as i32
     }
@@ -74,7 +73,7 @@ impl MouseButtonPressedEvent {
 }
 
 impl Event for MouseButtonPressedEvent {
-    EVENT_STRUCT_TYPE!(MouseButtonPressed);
+    super::EVENT_STRUCT_TYPE!(MouseButtonPressed);
     fn get_category_flags(&self) -> i32 {
         super::EventCategory::EventCategoryMouse as i32 | super::EventCategory::EventCategoryInput as i32 | super::EventCategory::EventCategoryMouseButton as i32
     }
@@ -95,7 +94,7 @@ impl MouseButtonReleasedEvent {
 }
 
 impl Event for MouseButtonReleasedEvent {
-    EVENT_STRUCT_TYPE!(MouseButtonReleased);
+    super::EVENT_STRUCT_TYPE!(MouseButtonReleased);
     fn get_category_flags(&self) -> i32 {
         super::EventCategory::EventCategoryMouse as i32 | super::EventCategory::EventCategoryInput as i32 | super::EventCategory::EventCategoryMouseButton as i32
     }

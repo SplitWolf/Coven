@@ -1,3 +1,4 @@
+#![allow(unused_imports, unused_macros)]
 pub use log::{ log as __log, Level as __Level};
 use log4rs::Config;
 use log4rs::append::console::ConsoleAppender;
@@ -34,7 +35,6 @@ pub fn init() {
     log4rs::init_config(config).unwrap();
 }
 
-#[macro_export]
 #[cfg(debug_assertions)]
 macro_rules! COVEN_CORE_INFO {
     ($($arg:tt)+) => ({
@@ -46,7 +46,8 @@ macro_rules! COVEN_CORE_INFO {
     });
 }
 
-#[macro_export]
+pub(crate) use COVEN_CORE_INFO;
+
 #[cfg(debug_assertions)]
 macro_rules! COVEN_CORE_WARN {
     ($($arg:tt)+) => ({
@@ -57,8 +58,8 @@ macro_rules! COVEN_CORE_WARN {
         crate::log::__log!(target: "core",crate::log::__Level::Warn,$($arg)+);
     });
 }
+pub(crate) use COVEN_CORE_WARN;
 
-#[macro_export]
 #[cfg(debug_assertions)]
 macro_rules! COVEN_CORE_ERROR {
     ($($arg:tt)+) => ({
@@ -69,6 +70,7 @@ macro_rules! COVEN_CORE_ERROR {
         crate::log::__log!(target: "core",crate::log::__Level::Error,$($arg)+);
     });
 }
+pub(crate) use COVEN_CORE_ERROR;
 
 #[macro_export]
 #[cfg(debug_assertions)]

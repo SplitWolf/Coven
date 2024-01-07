@@ -1,6 +1,5 @@
 //TODO: Add custom std::fmt::Display for each event
 use super::Event;
-use crate::EVENT_STRUCT_TYPE;
 
 pub struct KeyPressedEvent {
     key_code: i32,
@@ -18,7 +17,7 @@ impl KeyPressedEvent {
 }
 
 impl Event for KeyPressedEvent {
-    EVENT_STRUCT_TYPE!(KeyPressed);
+    super::EVENT_STRUCT_TYPE!(KeyPressed);
     fn get_category_flags(&self) -> i32 {
         super::EventCategory::EventCategoryInput as i32 | super::EventCategory::EventCategoryKeyboard as i32
     }
@@ -40,7 +39,7 @@ impl KeyReleasedEvent {
 }
 
 impl Event for KeyReleasedEvent {
-    EVENT_STRUCT_TYPE!(KeyReleased);
+    super::EVENT_STRUCT_TYPE!(KeyReleased);
     fn get_category_flags(&self) -> i32 {
         super::EventCategory::EventCategoryInput as i32 | super::EventCategory::EventCategoryKeyboard as i32
     }
