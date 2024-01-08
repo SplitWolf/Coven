@@ -8,3 +8,8 @@ pub mod log;
 mod entry_point;
 // ------------------  Event System --------------------
 mod event;
+// ------------------ Window ------------------
+mod window;
+
+// ------------------ Platform Specific Code ------------------
+mod platform;

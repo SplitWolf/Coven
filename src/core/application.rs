@@ -50,7 +50,7 @@ pub trait Application {
                     // You only need to call this if you've determined that you need to redraw in
                     // applications which do not always need to. Applications that redraw continuously
                     // can render here instead.
-                    // window.request_redraw();
+                    win.window.request_redraw();
                     // window.set_title("Test");
                 },
                 WinitEvent::WindowEvent {
