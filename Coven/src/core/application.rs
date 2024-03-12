@@ -8,18 +8,9 @@ use crate::event::application_event::WindowCloseEvent;
 use crate::platform::windows_window;
 use crate::window::{Window, WindowProps};
 use crate::log::{self, COVEN_CORE_WARN};
-use crate::event::mouse_event::MouseMovedEvent;
-use winit::{
-    event::{Event as WinitEvent, WindowEvent},
-    event_loop::{ControlFlow, EventLoop},
-    window::WindowBuilder,
-    monitor::MonitorHandle
-};
-use winit::dpi::{PhysicalPosition, PhysicalSize};
 
 pub fn init() {
     crate::log::init();
-
 }
 
 pub struct ApplicationSpecification {
