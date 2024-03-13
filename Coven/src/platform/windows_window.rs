@@ -1,19 +1,58 @@
-use crate::window::{Window, WindowProps, EventCallback};
-use winit::{
-    window::{ Window as WinitWindow, WindowBuilder}, 
-    event_loop::{EventLoop, ControlFlow}, 
-    dpi::{PhysicalSize, PhysicalPosition
-    }};
+use std::time::Duration;
 
-pub struct WindowsWindow {
+use crate::{event::{application_event::WindowCloseEvent, Event, IEventListener}, window::{Window, WindowProps}};
+use winit::{
+    dpi::{PhysicalPosition, PhysicalSize}, 
+    event::{Event as WinitEvent, WindowEvent},
+    event_loop::{ControlFlow, EventLoop}, 
+    platform::pump_events::EventLoopExtPumpEvents, 
+    window::{ Window as WinitWindow, WindowBuilder}
+};
+
+pub struct WindowsWindow<'window_life, T: IEventListener> {
     props: WindowProps,
-    pub window: WinitWindow,
-    pub event_loop: EventLoop<()>
+    window: WinitWindow,
+    event_loop: EventLoop<()>,
+    event_cb: Option<&'window_life T>
 }
 
-impl Window for WindowsWindow {
-    fn on_update(&self) {
-        todo!()
+impl<'window_life, T: IEventListener> Window<'window_life, T> for WindowsWindow<'window_life, T> {
+    fn on_update(&mut self) {
+        self.event_loop.pump_events(Some(Duration::ZERO),  | event, elwt| {
+                match event {
+                    WinitEvent::WindowEvent {
+                            event: WindowEvent::CloseRequested,
+                            ..
+                        } => {
+                            println!("The close button was pressed; stopping");
+                            elwt.exit();
+                            let mut close_event = WindowCloseEvent::new();
+                            //TODO: Safe unwrap when no callback is set
+                            self.event_cb.unwrap().on_event(&mut close_event);
+                        //    std::process::exit(0);
+                        },
+                        WinitEvent::AboutToWait => {
+                            // Application update code.
+                
+                            // Queue a RedrawRequested event.
+                            //
+                            // You only need to call this if you've determined that you need to redraw in
+                            // applications which do not always need to. Applications that redraw continuously
+                            // can render here instead.
+                            self.window.request_redraw();
+                            // self.window.set_title("Test");
+                        },
+                        WinitEvent::WindowEvent {
+                            event: WindowEvent::RedrawRequested,
+                            ..
+                        } => {
+                            // It's preferable for applications that do not render continuously to render in
+                            // this event rather than in AboutToWait, since rendering in here allows
+                            // the program to gracefully handle redraws requested by the OS.
+                        },
+                        _ => ()
+                    }
+         });
     }
 
     fn get_height(&self) {
@@ -24,8 +63,8 @@ impl Window for WindowsWindow {
         self.props.width;
     }
 
-    fn set_event_callback<T: crate::event::Event>(&mut self, event: EventCallback<T>) {
-        todo!()
+    fn set_event_callback(&mut self, event_cb: &'window_life T) {
+        self.event_cb = Option::from(event_cb);
     }
 
     fn set_vsync(&mut self, enabled: bool) {
@@ -56,7 +95,8 @@ impl Window for WindowsWindow {
         WindowsWindow {
             props: window_props,
             window,
-            event_loop
+            event_loop,
+            event_cb: None
         }
     }
 }
