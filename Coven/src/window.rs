@@ -1,5 +1,5 @@
 #![allow(dead_code)]
-use crate::event::{Event, IEventListener};
+use crate::event::IEventListener;
 
 #[derive(Clone)]
 pub struct WindowProps {
