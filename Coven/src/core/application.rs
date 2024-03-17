@@ -24,15 +24,15 @@ pub struct ApplicationSpecification {
 }
 
 pub struct Application {
-    spec: ApplicationSpecification,
-    m_Running: Mutex<bool>
+    _spec: ApplicationSpecification,
+    m_running: Mutex<bool>
 }
 
 impl Application {
     pub fn new(spec: ApplicationSpecification) -> Self {
         Application {
-            spec,
-            m_Running: Mutex::from(true)
+            _spec: spec,
+            m_running: Mutex::from(true),
         }
     }
     pub fn run(&mut self) {
@@ -41,10 +41,10 @@ impl Application {
         let mut win  = windows_window::WindowsWindow::create(
             &WindowProps::new_with_values("Coven Engine".to_string(), 1280, 720)
         );
-        
+
         win.set_event_callback(self);
 
-        while *self.m_Running.lock().unwrap() {
+        while *self.m_running.lock().unwrap() {
             // COVEN_CORE_WARN!("testing 123");
             win.on_update();
             sleep(Duration::from_millis(16));
@@ -58,15 +58,15 @@ impl Application {
 
 impl IEventListener for Application {
     fn on_event(&self, event: &mut dyn Event) {
+        COVEN_CORE_INFO!("Event: {}", event.get_name());
         let mut ed = EventDispatcher::new(event);
-        let q  = ed.dispatch::<WindowCloseEvent>(self);
-        COVEN_CORE_INFO!("Close Event: {}",q)
+        ed.dispatch::<WindowCloseEvent>(self);
     }
 }
 
 impl IEventHandler<WindowCloseEvent> for Application {
-    fn handle(&self, event: &WindowCloseEvent) -> bool {
-        *self.m_Running.lock().unwrap() = false;
+    fn handle(&self, _event: &WindowCloseEvent) -> bool {
+        *self.m_running.lock().unwrap() = false;
         true
     }
 }
