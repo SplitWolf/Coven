@@ -1,24 +1,12 @@
 #![allow(unused_imports)]
 use coven::Application;
+use coven::ApplicationSpecification;
 use coven::*;
 
-
-struct SandboxApp {
-    
+fn main() {
+    let mut app = Application::new(ApplicationSpecification {});
+    app.push_layer();
+    app.run();
 }
 
-impl SandboxApp {
-    fn new() -> Self {
-        SandboxApp { }
-    }
-}
-
-impl Application for SandboxApp {
-    fn create_app() -> Self where Self: Sized {
-        let app =  SandboxApp::new();
-        COVEN_CLIENT_ERROR!("test");
-        COVEN_CLIENT_WARN!("test");
-        app
-    }
-}
-coven::startApp!(SandboxApp);
+// coven::startApp!(SandboxApp);

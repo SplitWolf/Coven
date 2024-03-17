@@ -72,10 +72,16 @@ impl std::fmt::Display for dyn Event {
     }
 }
 
-pub struct EventDispatcher<'eventlife> {
-    event: &'eventlife mut dyn Event
+pub trait IEventListener {
+    fn on_event(&self, event: &mut dyn Event);
 }
-type EventFn<E> = fn(&E) -> bool;
+pub trait IEventHandler<T: Event> {
+    fn handle(&self, event: &T) -> bool; 
+}
+
+pub struct EventDispatcher<'event_life> {
+    event: &'event_life mut dyn Event
+}
 
 impl EventDispatcher<'_> {
     
@@ -84,9 +90,18 @@ impl EventDispatcher<'_> {
     }
     
 
-    pub fn dispatch<T: Event + 'static>(&mut self, func: EventFn<T>) -> bool {
+    // pub fn dispatch<T: Event + 'static>(&mut self, func: impl FnOnce(&T) -> bool) -> bool
+    //  {
+    //     if self.event.get_event_type() == T::get_static_type() {
+    //         self.event.set_handled(func(self.event.as_any().downcast_ref().expect("Already Checked")));
+    //         return true;
+    //     }
+    //     false
+    // }
+    pub fn dispatch<T: Event + 'static>(&mut self, func: &impl IEventHandler<T>) -> bool
+     {
         if self.event.get_event_type() == T::get_static_type() {
-            self.event.set_handled(func(self.event.as_any().downcast_ref().expect("Already Checked")));
+            self.event.set_handled(func.handle(self.event.as_any().downcast_ref().expect("Already Checked")));
             return true;
         }
         false

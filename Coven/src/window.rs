@@ -1,7 +1,5 @@
 #![allow(dead_code)]
-use crate::event::Event;
-
-pub type EventCallback<E> = fn(&E) -> bool;
+use crate::event::IEventListener;
 
 #[derive(Clone)]
 pub struct WindowProps {
@@ -24,12 +22,12 @@ impl WindowProps {
     }
 }
 
-pub trait Window {
-    fn on_update(&self);
+pub trait Window<'window_life, T: IEventListener> {
+    fn on_update(&mut self);
     fn get_height(&self);
     fn get_width(&self);
 
-    fn set_event_callback<T: Event>(&mut self, event: EventCallback<T>);
+    fn set_event_callback(&mut self, event_cb: &'window_life T);
     fn set_vsync(&mut self, enabled: bool);
     fn is_vsync(&self) -> bool;
 
