@@ -7,7 +7,7 @@ pub mod log;
 #[macro_use]
 mod entry_point;
 // ------------------  Event System --------------------
-mod event;
+pub mod event;
 // ------------------ Window ------------------
 mod window;
 
